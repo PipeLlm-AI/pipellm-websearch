@@ -1,0 +1,37 @@
+{
+  "id": "pipellm-websearch-plugin",
+  "kind": "skill",
+  "name": "PipeLLM WebSearch",
+  "version": "1.0.0",
+  "description": "RAG-enhanced web search powered by PipeLLM — returns deep, relevant content extracted from web pages, not just snippets. Uses Google Search + Cohere Embedding + Rerank pipeline.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["apiKey"],
+    "properties": {
+      "apiKey": {
+        "type": "string",
+        "minLength": 1,
+        "description": "Your PipeLLM API Key (starts with 'pipe-'). Get one at https://console.pipellm.com"
+      },
+      "apiEndpoint": {
+        "type": "string",
+        "description": "PipeLLM API endpoint. Change only if using a self-hosted instance."
+      }
+    }
+  },
+  "uiHints": {
+    "apiKey": {
+      "label": "PipeLLM API Key",
+      "placeholder": "pipe-xxxxxxxxxxxxxxxxxxxx",
+      "sensitive": true,
+      "helpText": "Get your API key at https://console.pipellm.com → API Keys → Create Key"
+    },
+    "apiEndpoint": {
+      "label": "API Endpoint (optional)",
+      "placeholder": "https://api.pipellm.ai",
+      "sensitive": false,
+      "helpText": "Default: https://api.pipellm.ai — only change for self-hosted deployments"
+    }
+  }
+}

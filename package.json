@@ -1,0 +1,36 @@
+{
+  "name": "pipellm-websearch",
+  "version": "1.1.1",
+  "description": "OpenClaw plugin: RAG-enhanced web search powered by PipeLLM (Google Search + Cohere Embedding + Rerank)",
+  "type": "module",
+  "main": "index.ts",
+  "files": [
+    "index.ts",
+    "openclaw.plugin.json",
+    "skills/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "openclaw",
+    "plugin",
+    "web-search",
+    "pipellm",
+    "rag",
+    "search",
+    "cohere",
+    "rerank",
+    "embedding"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PipeLlm-AI/pipellm-websearch-plugin"
+  },
+  "homepage": "https://pipellm.com",
+  "author": "PipeLLM AI",
+  "license": "MIT",
+  "devDependencies": {
+    "@sinclair/typebox": "^0.34.0",
+    "@types/node": "^22.0.0"
+  }
+}
