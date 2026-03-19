@@ -17,6 +17,10 @@
       "apiEndpoint": {
         "type": "string",
         "description": "PipeLLM API endpoint. Change only if using a self-hosted instance."
+      },
+      "tavilyApiKey": {
+        "type": "string",
+        "description": "Optional Tavily API key (starts with 'tvly-'). Enables the tavily_search tool as an alternative search option. Get one at https://app.tavily.com"
       }
     }
   },
@@ -32,6 +36,12 @@
       "placeholder": "https://api.pipellm.ai",
       "sensitive": false,
       "helpText": "Default: https://api.pipellm.ai — only change for self-hosted deployments"
+    },
+    "tavilyApiKey": {
+      "label": "Tavily API Key (optional)",
+      "placeholder": "tvly-xxxxxxxxxxxxxxxxxxxx",
+      "sensitive": true,
+      "helpText": "Optional. Enables tavily_search tool. Get your key at https://app.tavily.com (1,000 free credits/month)"
     }
   }
 }
