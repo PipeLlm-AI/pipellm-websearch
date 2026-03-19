@@ -15,6 +15,7 @@ This plugin provides 4 tools for accessing web information. Choose the right too
 | `pipellm_web_search` | ~5-15s | Research, deep analysis, fact-checking |
 | `pipellm_web_reader` | ~3-10s | Reading a specific URL's full content |
 | `pipellm_news_search` | ~5-15s | Current events, breaking news, recent developments |
+| `tavily_search` | ~1-3s | General web search (alternative, requires Tavily API key) |
 
 ### Decision Flow
 
@@ -22,6 +23,7 @@ This plugin provides 4 tools for accessing web information. Choose the right too
 2. **Have a specific URL to read?** → `pipellm_web_reader`
 3. **Need quick search results or URLs?** → `pipellm_simple_search`
 4. **Need deep, authoritative content?** → `pipellm_web_search`
+5. **No PipeLLM key but have Tavily configured?** → `tavily_search` (general-purpose alternative)
 
 ## Tools
 
@@ -53,6 +55,13 @@ Searches Google News via Serper, then applies the full RAG pipeline to news arti
 - **Parameter:** `query` (string)
 - **Best for:** Current events, company news, market updates
 - **Cost:** $0.05 per search
+
+### `tavily_search` — Tavily Web Search (optional)
+General-purpose web search powered by Tavily. Only available when `tavilyApiKey` is configured.
+
+- **Parameters:** `query` (string), optional `searchDepth` ("basic" | "advanced"), `maxResults` (1-20), `topic` ("general" | "news" | "finance")
+- **Best for:** General web search when PipeLLM is not configured, or as a fast alternative search option
+- **Cost:** Free tier includes 1,000 credits/month at https://app.tavily.com
 
 ## Tips
 

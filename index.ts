@@ -1,4 +1,5 @@
 import { Type } from "@sinclair/typebox";
+import { tavily } from "@tavily/core";
 
 const DEFAULT_ENDPOINT = "https://api.pipellm.ai";
 
@@ -185,6 +186,7 @@ function handleFetchError(
 export default function (api: any) {
   const pluginConfig: Record<string, string> = (api as any)?.config ?? {};
   const apiKey = pluginConfig.apiKey;
+  const tavilyApiKey = pluginConfig.tavilyApiKey;
   const apiEndpoint = (pluginConfig.apiEndpoint || DEFAULT_ENDPOINT).replace(
     /\/+$/,
     "",
@@ -442,4 +444,108 @@ export default function (api: any) {
     },
     { optional: true },
   );
+
+  // ─── Tool 5: Tavily Search (optional, requires tavilyApiKey) ───────
+  if (tavilyApiKey) {
+    const tavilyClient = tavily({ apiKey: tavilyApiKey });
+
+    api.registerTool(
+      {
+        name: "tavily_search",
+        description:
+          "Web search powered by Tavily. Returns relevant results with content snippets. " +
+          "Fast alternative to PipeLLM search — does not require a PipeLLM account. " +
+          "Use for general web search, research, and fact-checking.",
+        parameters: Type.Object({
+          query: Type.String({
+            description: "The search query. Be specific for better results.",
+          }),
+          searchDepth: Type.Optional(
+            Type.Union([Type.Literal("basic"), Type.Literal("advanced")], {
+              description:
+                'Search depth: "basic" for fast results, "advanced" for higher relevance. Default: "basic".',
+            }),
+          ),
+          maxResults: Type.Optional(
+            Type.Number({
+              description: "Maximum number of results to return (1-20). Default: 5.",
+            }),
+          ),
+          topic: Type.Optional(
+            Type.Union(
+              [
+                Type.Literal("general"),
+                Type.Literal("news"),
+                Type.Literal("finance"),
+              ],
+              {
+                description:
+                  'Search topic: "general", "news", or "finance". Default: "general".',
+              },
+            ),
+          ),
+        }),
+        async execute(
+          _id: string,
+          params: {
+            query: string;
+            searchDepth?: "basic" | "advanced";
+            maxResults?: number;
+            topic?: "general" | "news" | "finance";
+          },
+        ) {
+          const query = params.query?.trim();
+          if (!query) {
+            return {
+              content: [{ type: "text", text: "Please provide a search query." }],
+            };
+          }
+
+          try {
+            const response = await tavilyClient.search(query, {
+              searchDepth: params.searchDepth ?? "basic",
+              maxResults: params.maxResults ?? 5,
+              topic: params.topic ?? "general",
+              includeAnswer: "basic",
+            });
+
+            const lines: string[] = [];
+
+            if (response.answer) {
+              lines.push(`**Answer:** ${response.answer}\n`);
+            }
+
+            if (response.results?.length) {
+              lines.push(`Found ${response.results.length} results:\n`);
+              for (let i = 0; i < response.results.length; i++) {
+                const r = response.results[i];
+                lines.push(`### ${i + 1}. ${r.title}`);
+                lines.push(`**URL:** ${r.url}`);
+                if (r.content) {
+                  lines.push(`**Content:** ${r.content}`);
+                }
+                lines.push("");
+              }
+            } else {
+              lines.push("No results found.");
+            }
+
+            return {
+              content: [{ type: "text", text: lines.join("\n") }],
+            };
+          } catch (err: any) {
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: `Tavily search failed: ${err?.message ?? String(err)}`,
+                },
+              ],
+            };
+          }
+        },
+      },
+      { optional: true },
+    );
+  }
 }
