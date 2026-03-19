@@ -5,7 +5,7 @@ description: "RAG-enhanced web search, simple search, news search, and web page 
 
 # PipeLLM Web Search
 
-This plugin provides 4 tools for accessing web information. Choose the right tool based on your task.
+This plugin provides 4 core tools for accessing web information, plus an optional `tavily_search` tool when a Tavily API key is configured. Choose the right tool based on your task.
 
 ## Tool Selection Guide
 
