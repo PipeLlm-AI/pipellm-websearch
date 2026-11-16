@@ -1,0 +1,20 @@
+{
+  "name": "@pipellm/magpie-websearch",
+  "version": "0.1.0",
+  "description": "PipeLLM WebSearch tools for Magpie agents",
+  "type": "module",
+  "main": "./index.mjs",
+  "files": ["index.mjs", "README.md", "LICENSE"],
+  "keywords": ["magpie", "opencode", "opencode-plugin", "tools", "pipellm", "websearch"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PipeLlm-AI/pipellm-websearch.git",
+    "directory": "packages/magpie-websearch"
+  },
+  "homepage": "https://pipellm.ai",
+  "author": "PipeLLM AI",
+  "magpie": {
+    "icon": "https://www.pipellm.ai/favicon.ico"
+  }
+}

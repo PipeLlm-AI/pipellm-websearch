@@ -5,6 +5,17 @@
 
 > Give your AI agent the ability to search the web, read pages, and stay up to date — powered by PipeLLM.
 
+## Packages
+
+This repository contains two packages for different agent hosts. Install only the package for the host you use:
+
+| Agent host | Package | Install |
+| --- | --- | --- |
+| OpenClaw | `pipellm-websearch` | `npm install pipellm-websearch` |
+| Magpie | `@pipellm/magpie-websearch` | `magpie plugin add @pipellm/magpie-websearch` |
+
+The existing OpenClaw package lives at the repository root. The Magpie package lives in [`packages/magpie-websearch`](./packages/magpie-websearch/), has its own `package.json`, and is published independently. The two packages share the PipeLLM WebSearch service but have separate host adapters and release versions.
+
 ## ✨ Features
 
 - 🔍 **Web Search** — search the web and get rich, relevant content
@@ -121,3 +132,14 @@ Each request costs **$0.05**. Check your balance at [console.pipellm.com](https:
 ## 📄 License
 
 MIT
+
+## Magpie
+
+Magpie users can install the companion tools package:
+
+```bash
+magpie plugin add @pipellm/magpie-websearch
+magpie plugin login pipellm-websearch
+```
+
+The Magpie package provides the same PipeLLM WebSearch capabilities through Magpie's tools MCP service. Its source and package manifest are in [`packages/magpie-websearch`](./packages/magpie-websearch/).
