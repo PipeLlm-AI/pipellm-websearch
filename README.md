@@ -121,3 +121,14 @@ Each request costs **$0.05**. Check your balance at [console.pipellm.com](https:
 ## 📄 License
 
 MIT
+
+## Magpie
+
+Magpie users can install the companion tools package:
+
+```bash
+magpie plugin add @pipellm/magpie-websearch
+magpie plugin login pipellm-websearch
+```
+
+The Magpie package provides the same PipeLLM WebSearch capabilities through Magpie's tools MCP service. Its source and package manifest are in [`packages/magpie-websearch`](./packages/magpie-websearch/).
